@@ -5339,6 +5339,78 @@
         </div>
     </div>
     <script charset="utf-8" defer="defer" id="a-js" src="./assets/xcYMWM0577741.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("FAQ Accordion Controller Inicializado!");
+    
+    // Forçar inicialização dos acordeões inativos no carregamento
+    document.querySelectorAll(".a-ac-i").forEach(function(item, index) {
+        const title = item.querySelector(".a-ac-t");
+        const content = item.querySelector(".a-ac-ct");
+        
+        if (title && content) {
+            // O primeiro item (índice 0) costuma iniciar aberto, os outros fechados.
+            if (index === 0) {
+                title.classList.add("a-ac-t-active");
+                content.classList.remove("a-c-inactive");
+                content.style.display = "block";
+                
+                const activeIcon = title.querySelector(".fa-minus")?.closest("div");
+                const inactiveIcon = title.querySelector(".fa-plus")?.closest("div");
+                if (activeIcon) activeIcon.classList.remove("atomicat-hidden");
+                if (inactiveIcon) inactiveIcon.classList.add("atomicat-hidden");
+            } else {
+                title.classList.remove("a-ac-t-active");
+                content.classList.add("a-c-inactive");
+                content.style.display = "none";
+                
+                const activeIcon = title.querySelector(".fa-minus")?.closest("div");
+                const inactiveIcon = title.querySelector(".fa-plus")?.closest("div");
+                if (activeIcon) activeIcon.classList.add("atomicat-hidden");
+                if (inactiveIcon) inactiveIcon.classList.remove("atomicat-hidden");
+            }
+        }
+    });
+
+    // Delegar cliques de forma robusta e independente de espaços no HTML
+    document.querySelectorAll(".a-ac-t").forEach(function(title) {
+        title.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const parentItem = title.closest(".a-ac-i");
+            if (!parentItem) return;
+            
+            const content = parentItem.querySelector(".a-ac-ct");
+            if (!content) return;
+            
+            const isActive = title.classList.contains("a-ac-t-active");
+            const activeIcon = title.querySelector(".fa-minus")?.closest("div");
+            const inactiveIcon = title.querySelector(".fa-plus")?.closest("div");
+            
+            if (isActive) {
+                // Fechar
+                title.classList.remove("a-ac-t-active");
+                content.classList.add("a-c-inactive");
+                content.style.display = "none";
+                
+                if (activeIcon) activeIcon.classList.add("atomicat-hidden");
+                if (inactiveIcon) inactiveIcon.classList.remove("atomicat-hidden");
+            } else {
+                // Abrir
+                title.classList.add("a-ac-t-active");
+                content.classList.remove("a-c-inactive");
+                content.style.display = "block";
+                
+                if (activeIcon) activeIcon.classList.remove("atomicat-hidden");
+                if (inactiveIcon) inactiveIcon.classList.add("atomicat-hidden");
+            }
+        });
+    });
+});
+</script>
 </body>
+
 
 </html>
