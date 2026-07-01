@@ -34,45 +34,73 @@
             .pricing-card {
                 background: #ffffff;
                 border: 2px solid #e2e8f0;
-                border-radius: 20px;
-                padding: 35px 25px;
+                border-radius: 24px;
+                padding: 40px 30px;
                 text-align: center;
                 flex: 1;
-                transition: transform 0.3s, box-shadow 0.3s;
+                transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
                 position: relative;
                 display: flex;
                 flex-direction: column;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             }
             .pricing-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.08);
             }
+            
+            /* PLANO PREMIUM - DESIGN ULTRA PREMIUM (DARK MODE CONCEPT) */
             .pricing-card.featured {
-                border-color: #00a1e6;
-                box-shadow: 0 10px 30px rgba(0, 161, 230, 0.15);
+                background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+                border: 2px solid #00a1e6;
+                box-shadow: 0 15px 35px rgba(0, 161, 230, 0.25);
+                color: #ffffff;
             }
             .pricing-card.featured:hover {
-                box-shadow: 0 15px 35px rgba(0, 161, 230, 0.25);
+                box-shadow: 0 25px 50px rgba(0, 161, 230, 0.4);
             }
+            .pricing-card.featured .card-header h4 {
+                color: #ffffff;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            .pricing-card.featured .plan-subtitle {
+                color: #94a3b8;
+            }
+            .pricing-card.featured .card-price {
+                color: #25d366; /* Verde do WhatsApp / checkout */
+            }
+            .pricing-card.featured .payment-terms {
+                color: #94a3b8;
+            }
+            .pricing-card.featured .plan-features li {
+                color: #e2e8f0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+                padding-bottom: 8px;
+            }
+            .pricing-card.featured .plan-features li:last-child {
+                border-bottom: none;
+            }
+            
+            /* Selo Recomendado Premium (Gold) */
             .badge-featured {
                 position: absolute;
                 top: -15px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: #00a1e6;
-                color: #ffffff;
+                background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+                color: #0f172a;
                 font-size: 11px;
-                font-weight: 700;
-                padding: 6px 18px;
+                font-weight: 800;
+                padding: 6px 20px;
                 border-radius: 20px;
-                letter-spacing: 1px;
+                letter-spacing: 1.5px;
                 text-transform: uppercase;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 10px rgba(250, 204, 21, 0.4);
+                border: 1px solid rgba(255,255,255,0.2);
             }
             .card-header h4 {
                 font-family: 'Poppins', sans-serif;
-                font-size: 22px;
+                font-size: 24px;
                 font-weight: 700;
                 color: #363636;
                 margin: 0 0 8px 0;
@@ -84,7 +112,7 @@
                 margin: 0;
             }
             .card-price {
-                margin: 25px 0;
+                margin: 30px 0;
                 display: flex;
                 align-items: baseline;
                 justify-content: center;
@@ -92,22 +120,22 @@
                 color: #2ebd59;
             }
             .currency {
-                font-size: 18px;
+                font-size: 20px;
                 font-weight: 600;
                 margin-right: 4px;
             }
             .price-value {
-                font-size: 56px;
+                font-size: 64px;
                 font-weight: 800;
                 line-height: 1;
             }
             .price-cents {
-                font-size: 20px;
+                font-size: 24px;
                 font-weight: 700;
             }
             .payment-terms {
                 font-family: 'Roboto', sans-serif;
-                font-size: 13px;
+                font-size: 14px;
                 color: #7a7a7a;
                 margin-left: 6px;
                 font-weight: 500;
@@ -119,7 +147,7 @@
                 text-align: left;
                 display: flex;
                 flex-direction: column;
-                gap: 12px;
+                gap: 14px;
                 flex-grow: 1;
             }
             .plan-features li {
@@ -129,39 +157,58 @@
                 line-height: 1.4;
                 display: flex;
                 align-items: center;
-                gap: 8px;
+                gap: 10px;
             }
             .checkout-btn {
                 display: block;
                 text-align: center;
-                padding: 16px 20px;
-                border-radius: 12px;
+                padding: 18px 25px;
+                border-radius: 14px;
                 font-family: 'Poppins', sans-serif;
                 font-weight: 700;
                 font-size: 15px;
                 text-transform: uppercase;
                 text-decoration: none;
-                transition: background 0.3s, transform 0.2s;
+                transition: all 0.3s ease;
                 cursor: pointer;
                 border: none;
                 margin-top: auto;
             }
             .basic-btn {
-                background: #00a1e6;
-                color: #ffffff;
+                background: #f1f5f9;
+                color: #0f172a;
+                border: 2px solid #e2e8f0;
             }
             .basic-btn:hover {
-                background: #0089c4;
+                background: #e2e8f0;
+                color: #0f172a;
             }
+            
+            /* Botão de Alta Conversão Premium com Efeito Pulsante */
             .premium-btn {
-                background: #2ebd59;
+                background: linear-gradient(135deg, #2ebd59 0%, #25d366 100%);
                 color: #ffffff;
-                box-shadow: 0 4px 12px rgba(46, 189, 89, 0.2);
+                box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+                animation: premium-pulse 2s infinite;
             }
             .premium-btn:hover {
-                background: #27a74e;
-                transform: scale(1.02);
+                background: linear-gradient(135deg, #27a74e 0%, #22c55e 100%);
+                box-shadow: 0 10px 25px rgba(37, 211, 102, 0.6);
+                transform: scale(1.03);
             }
+            
+            @keyframes premium-pulse {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+                }
+            }
+            
             @media screen and (max-width: 768px) {
                 .pricing-wrapper {
                     flex-direction: column;
@@ -169,10 +216,10 @@
                     gap: 30px;
                 }
                 .pricing-card {
-                    padding: 30px 20px;
+                    padding: 35px 20px;
                 }
             }
-        </style>
+</style>
 <div class="a-i-cont a-cont" style="flex-direction: column; gap: 0;">
 <h3 class="pricing-section-title">Escolha o plano ideal para destravar a leitura do seu filho</h3>
 <p class="pricing-section-subtitle">Acesso imediato e garantia incondicional de 7 dias</p>
@@ -213,15 +260,7 @@
 <span class="price-cents">,00</span>
 <span class="payment-terms">à vista</span>
 </div>
-<ul class="plan-features">
-<li>✅ <strong>Tudo do Plano Básico</strong></li>
-<li>✅ 🚀 <strong>Acesso Vitalício</strong> (Sem expiração)</li>
-<li>✅ 🔄 Atualizações Gratuitas Vitalícias</li>
-<li>✅ <strong>Suporte VIP</strong> via WhatsApp</li>
-<li>✅ Bônus VIP: Kit Dislexia e TDAH</li>
-<li>✅ Acesso à Comunidade de Mães</li>
-<li>✅ Garantia Incondicional de 7 Dias</li>
-</ul>
+<ul class="plan-features"><li>✨ <strong>Tudo do Plano Básico</strong></li><li>🚀 <strong>Acesso Vitalício</strong> (Sem mensalidades)</li><li>🔄 <strong>Atualizações Gratuitas</strong> para Sempre</li><li>💬 <strong>Suporte VIP</strong> direto via WhatsApp</li><li>🎁 <strong>Bônus VIP:</strong> Kit Dislexia e TDAH</li><li>👥 Acesso à Comunidade de Mães</li><li>🛡️ Garantia Incondicional de 7 Dias</li></ul>
 <a class="checkout-btn premium-btn" href="#">Quero o Plano Premium</a>
 </div>
 </div>
