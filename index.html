@@ -4984,85 +4984,131 @@
                         <div class="a-o-cont a-cont-f-w">
                             
 <style>
-  /* Overrides de responsividade e reducao de espacos (GAP) para a secao de garantia */
-  .atomicat-container-6ef2381>.a-o-cont {
-    padding-top: 15px !important;
-    padding-bottom: 15px !important;
+  /* Remoção completa de espaços vazios e otimização da seção de garantia */
+  .atomicat-container-1505457 {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .atomicat-container-1505457>.a-o-cont {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
 
-  @media screen and (max-width: 480px) {
-    .atomicat-container-6ef2381>.a-o-cont {
-      padding-top: 10px !important;
-      padding-bottom: 10px !important;
-      padding-left: 10px !important;
-      padding-right: 10px !important;
-    }
-  }
-
-  .a-i-cont.a-s-d-v7qmu2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 20px !important; /* Reduzido de 40px para 20px */
-    max-width: 800px;
-    margin: 0 auto;
-    width: 100%;
+  .atomicat-container-1505457>.a-o-cont>.a-cont {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 30px !important;
+    max-width: 850px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
   }
 
   .a-c-cont-23adb9d {
-    flex-shrink: 0;
-    width: 140px !important; /* Ajustado de 160px para 140px */
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 140px !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
 
   .img-garantia {
-    width: 130px; /* Ajustado para caber perfeitamente */
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.05));
+    width: 130px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.06)) !important;
   }
 
   .atomicat-container-f145ed8 {
-    flex: 1;
+    flex: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+  }
+
+  .atomicat-container-f145ed8>.a-o-cont {
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   .atomicat-container-f145ed8>.a-o-cont>.a-cont {
-    gap: 4px !important; /* Reduzido o gap vertical interno de 10px para 4px */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .a-c-cont-840afc1, .a-c-cont-7aae20b {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .atomicat-heading-title-840afc1, .atomicat-heading-title-7aae20b {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .a-i-cont.a-s-d-v7qmu2 p {
-    margin: 0 !important; /* Zera margens padrao de p para remover lacunas */
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .atomicat-heading-title-840afc1 {
-    margin-bottom: 2px !important; /* Reduzido o espaco entre titulo e texto */
+  .a-e-cont.atomicat-heading-title-840afc1 h3 {
+    text-align: left !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    line-height: 1.2em !important;
+    color: #00963a !important;
+    margin: 0 !important;
   }
 
-  /* Responsividade Mobile-First */
+  .a-e-cont.atomicat-heading-title-7aae20b h3 {
+    text-align: left !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.5em !important;
+    color: #4a4a4a !important;
+    margin: 0 !important;
+  }
+
+  /* Responsividade Mobile-First (Celulares) */
   @media screen and (max-width: 768px) {
-    .a-i-cont.a-s-d-v7qmu2 {
+    .atomicat-container-1505457>.a-o-cont {
+      padding-top: 20px !important;
+      padding-bottom: 20px !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+
+    .atomicat-container-1505457>.a-o-cont>.a-cont {
       flex-direction: column !important;
-      text-align: center !important;
       align-items: center !important;
-      justify-content: center !important;
-      gap: 10px !important; /* Reduzido o gap vertical no mobile */
-      padding: 0 8px !important;
+      gap: 12px !important;
+      text-align: center !important;
     }
 
     .a-c-cont-23adb9d {
       width: 100% !important;
-      margin-bottom: 2px !important;
+      margin-bottom: 5px !important;
     }
 
     .img-garantia {
-      width: 110px;
+      width: 100px !important;
+    }
+
+    .atomicat-container-f145ed8>.a-o-cont>.a-cont {
+      align-items: center !important;
+      gap: 6px !important;
     }
 
     .a-e-cont.atomicat-heading-title-840afc1 h3 {
@@ -5073,7 +5119,7 @@
     .a-e-cont.atomicat-heading-title-7aae20b h3 {
       text-align: center !important;
       font-size: 14px !important;
-      line-height: 1.4em !important;
+      line-height: 1.45em !important;
     }
   }
 </style>
@@ -5158,7 +5204,7 @@
                                                 <div
                                                     class="atomicat-element-container-840afc1 a-e-cont atomicat-heading-title-840afc1 atomicat-text-840afc1 a-r atomicat-heading-title">
                                                     <h3 class="a-i-e-cont">
-                                                        <p><strong>Garantia incondicional de 7 dias</strong></p>
+                                                        <p><strong>Garantia Incondicional de 7 Dias</strong></p>
                                                     </h3>
                                                 </div>
                                             </div>
@@ -5191,11 +5237,7 @@
                                                 <div
                                                     class="atomicat-heading-title-7aae20b atomicat-element-container-7aae20b atomicat-heading-title a-r atomicat-text-7aae20b a-e-cont">
                                                     <h3 class="a-i-e-cont">
-                                                        <p>Compre sem medo. Se em até 7 dias você sentir que o material
-                                                            não é para o seu filho, é só enviar uma mensagem e
-                                                            <strong>devolvemos 100% do seu dinheiro</strong> — sem
-                                                            perguntas, sem burocracia. O risco é todo meu.
-                                                        </p>
+                                                        <p>Compre sem medo! Se em até 7 dias você achar que o material não é ideal para seu filho, basta nos enviar uma mensagem. <strong>Devolvemos 100% do seu dinheiro</strong>, sem perguntas nem burocracia. O risco é todo meu!</p>
                                                     </h3>
                                                 </div>
                                             </div>
