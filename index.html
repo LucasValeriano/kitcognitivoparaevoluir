@@ -1377,30 +1377,72 @@
             display: none
         }
     
-  /* Estilos adicionais para as novas tabelas de precos */
-  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&display=swap');
-  
-  :root {
-    --primary: #8B5E83;
-    --primary-light: #C4768A;
-    --primary-dark: #6b4066;
-    --accent: #f4c2ce;
-    --success: #1fa05a;
-    --success-dark: #127a40;
-    --danger: #e23b3b;
-    --bg: #fff9f7;
-    --muted: #7a6b80;
-    --border: #ecdae6;
-
-    --grad-primary: linear-gradient(135deg, #7c4d7a 0%, #c4768a 100%);
-    --grad-warm: linear-gradient(160deg, #6b3060 0%, #8B5E83 45%, #c4768a 100%);
-    --grad-cta: linear-gradient(135deg, #1fa05a 0%, #16a673 100%);
-    --grad-dark: linear-gradient(145deg, #17062b 0%, #2d104a 100%);
-
-    --shadow: 0 8px 28px -10px rgba(139,94,131,0.18);
-    --shadow-pop: 0 22px 50px -14px rgba(139,94,131,0.38);
-    --shadow-cta: 0 14px 38px -10px rgba(31,160,90,0.55), inset 0 -3px 0 var(--success-dark);
+  /* Estilos adicionais para Sticky Buy Bar e Notificacoes */
+  .sticky-buy {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(135deg, #1fa05a 0%, #16a673 100%);
+    padding: 0.9rem 1rem;
+    z-index: 9990;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem;
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+    flex-wrap: wrap;
+    font-family: 'Poppins', sans-serif;
   }
+  .sticky-buy.vis { transform: translateY(0); }
+  .sticky-price { color: #fff; font-weight: 700; font-size: 0.82rem; line-height: 1.3; }
+  .sticky-price .np { font-family: 'Fredoka', sans-serif; font-size: 1.35rem; color: #f4c2ce; display: block; }
+  .sticky-btn {
+    background: #f4c2ce;
+    color: #1a0a2e;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 800; font-size: 0.95rem;
+    padding: 0.7rem 1.35rem;
+    border-radius: 999px;
+    border: 0; cursor: pointer;
+    white-space: nowrap; flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .sticky-btn:hover { transform: scale(1.02); }
+
+  .pp-notify {
+    position: fixed; left: 16px;
+    z-index: 9999;
+    display: flex; align-items: center; gap: 10px;
+    width: min(320px, calc(100vw - 32px));
+    background: #fff;
+    color: #1a0a2e;
+    border-radius: 14px;
+    padding: 11px 13px;
+    box-shadow: 0 18px 45px -12px rgba(15,23,42,0.25), 0 4px 12px rgba(15,23,42,0.07);
+    border: 1px solid rgba(15,23,42,0.06);
+    transform: translateX(-130%);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), opacity 0.45s;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    font-family: 'Poppins', sans-serif;
+  }
+  @media screen and (max-width: 768px) {
+    .pp-notify {
+      bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+  .pp-notify.show { transform: translateX(0); opacity: 1; }
+  .pp-av {
+    width: 40px; height: 40px; min-width: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c4d7a 0%, #c4768a 100%);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; flex-shrink: 0;
+  }
+  .pp-body { flex: 1; min-width: 0; line-height: 1.3; }
+  .pp-name { font-weight: 700; font-size: 0.86rem; }
+  .pp-text { font-size: 0.77rem; color: #475569; margin-top: 1px; }
+  .pp-meta { font-size: 0.67rem; color: #94a3b8; margin-top: 3px; display: flex; align-items: center; gap: 5px; }
+  .pp-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
 </style>
     <style>
         .a-b-cont {
@@ -4448,496 +4490,423 @@
       
       <!-- Tabela de Preços (Plano Básico vs Plano Premium) -->
       
-      
-<div class="a-o-cont a-cont-b" id="planos">
-  <style>
-    /* ===== VALUE STACK ===== */
-  .value-stack {
-    background: var(--grad-dark);
-    border-radius: 1.5rem;
-    padding: 2rem 1.25rem;
-    margin-top: 2rem;
-    text-align: center;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-  }
-  .value-stack::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(196,118,138,0.28), transparent 60%);
-    pointer-events: none;
-  }
-  .value-stack > * { position: relative; z-index: 1; }
-  .value-stack h3 { font-family: 'Fredoka', sans-serif; font-size: clamp(1.3rem, 4vw, 1.9rem); margin-bottom: 1rem; }
-  .vs-table { max-width: 420px; margin: 0 auto 1.5rem; }
-  .vs-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.45rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    font-size: 0.88rem;
-    opacity: 0.88;
-  }
-  .vs-row:last-child { border-bottom: none; }
-  .vs-row .vsr-label { text-align: left; }
-  .vs-row .vsr-price { font-weight: 700; color: var(--accent); white-space: nowrap; }
-  .vs-total-old {
-    font-family: 'Fredoka', sans-serif;
-    font-size: clamp(2rem, 6vw, 2.8rem);
-    text-decoration: line-through;
-    color: var(--accent);
-    opacity: 0.65;
-    display: block;
-    margin-bottom: 0.25rem;
-  }
-  .vs-price-you-pay { font-size: clamp(0.95rem, 2.5vw, 1.15rem); opacity: 0.9; }
-  .vs-price-you-pay strong {
-    font-family: 'Fredoka', sans-serif;
-    font-size: clamp(1.6rem, 5vw, 2.2rem);
-    color: var(--accent);
-    display: inline-block;
-  }
+      <div class="a-o-cont a-cont-b" id="planos">
+        <style>
+            .pricing-section-title {
+                text-align: center;
+                font-family: 'Poppins', sans-serif;
+                font-size: 32px;
+                font-weight: 700;
+                color: #0f172a;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            .pricing-section-subtitle {
+                text-align: center;
+                font-family: 'Roboto', sans-serif;
+                font-size: 16px;
+                color: #64748b;
+                margin-bottom: 40px;
+                width: 100%;
+            }
+            .pricing-wrapper {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: stretch;
+                gap: 28px;
+                max-width: 950px;
+                margin: 0 auto;
+                width: 100%;
+                padding: 30px 15px;
+            }
+            .pricing-card {
+                background: #ffffff;
+                border: 1px solid #f1f5f9;
+                border-radius: 24px;
+                padding: 40px 32px;
+                text-align: center;
+                flex: 1;
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 10px 15px -3px rgba(0, 0, 0, 0.03);
+            }
+            .pricing-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+                border-color: #e2e8f0;
+            }
 
-  /* ===== PRICING CARDS ===== */
-  .pricing-wrap {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin: 2.5rem auto 0;
-    max-width: 920px;
-  }
-  @media (min-width: 860px) {
-    .pricing-wrap { grid-template-columns: 1fr 1fr; gap: 1.75rem; align-items: start; }
-  }
-  .plan-card {
-    background: #fff;
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
-    border: 2px solid var(--border);
-    position: relative;
-    min-width: 0;
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
-  @media (min-width: 480px) { .plan-card { padding: 1.85rem; } }
-  .plan-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-pop); }
-  .plan-card.featured {
-    border: 3px solid var(--primary);
-    box-shadow: 0 28px 55px -18px rgba(139,94,131,0.38);
-  }
-  @media (min-width: 860px) { .plan-card.featured { transform: scale(1.025); } }
-  @media (min-width: 860px) { .plan-card.featured:hover { transform: scale(1.025) translateY(-4px); } }
+            /* PLANO BÁSICO REFINADO */
+            .pricing-card.basic {
+                background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+                border: 1px solid transparent;
+                background-image: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%), linear-gradient(135deg, #cbd5e1 0%, #f8fafc 50%, #94a3b8 100%);
+                background-origin: border-box;
+                background-clip: padding-box, border-box;
+                box-shadow: 0 10px 30px -10px rgba(148, 163, 184, 0.12), 0 20px 40px -15px rgba(0, 0, 0, 0.03);
+            }
+            .pricing-card.basic:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px -10px rgba(148, 163, 184, 0.22), 0 30px 60px -15px rgba(0, 0, 0, 0.06);
+            }
+            .pricing-card.basic .card-header h4 {
+                color: #64748b;
+                background: linear-gradient(135deg, #475569 0%, #94a3b8 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .pricing-card.basic .divider-line {
+                background-color: #cbd5e1;
+                opacity: 0.5;
+            }
+            .pricing-card.basic .price-green-badge {
+                background: #f1f5f9;
+                color: #475569;
+            }
 
-  .plan-badge {
-    position: absolute;
-    top: -0.9rem; left: 50%;
-    transform: translateX(-50%);
-    background: var(--grad-primary);
-    color: #fff;
-    padding: 0.4rem 1.1rem;
-    border-radius: 999px;
-    font-weight: 800;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    box-shadow: 0 8px 20px -8px rgba(139,94,131,0.6);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  @media (min-width: 480px) { .plan-badge { font-size: 0.76rem; padding: 0.45rem 1.25rem; } }
-
-  .plan-eyebrow { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
-  .plan-card.featured .plan-eyebrow { color: var(--primary); }
-  .plan-name { font-family: 'Fredoka', sans-serif; font-size: 1.45rem; font-weight: 700; margin: 0.2rem 0 0.6rem; }
-  .plan-desc { font-size: 0.84rem; color: var(--muted); margin-bottom: 1.1rem; line-height: 1.6; }
-  .plan-price-old { color: var(--muted); text-decoration: line-through; font-size: 0.88rem; }
-  .plan-price {
-    font-family: 'Fredoka', sans-serif;
-    font-size: clamp(2.4rem, 8vw, 3.2rem);
-    font-weight: 700;
-    line-height: 1;
-    color: #1a0a2e;
-    margin: 0.2rem 0;
-  }
-  .plan-price small { font-size: 1.15rem; }
-  .plan-card.featured .plan-price { background: var(--grad-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .plan-install { font-size: 0.84rem; color: var(--success); font-weight: 700; margin-bottom: 1.4rem; }
-  .plan-install.muted { color: var(--muted); font-weight: 500; }
-
-  .plan-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
-
-  .plan-features { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.5rem; }
-  .plan-feat {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    font-size: 0.88rem;
-    line-height: 1.45;
-    font-weight: 500;
-    color: #2e2040;
-  }
-  .plan-feat::before {
-    content: '';
-    flex-shrink: 0;
-    width: 20px; height: 20px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='none' stroke='%231fa05a' stroke-width='2.5'/><path d='M7.5 12.5l3 3 6-6' fill='none' stroke='%231fa05a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    margin-top: 1px;
-  }
-
-  /* Bonus box inside plan card */
-  .plan-bonus-box {
-    background: linear-gradient(135deg, #fdf5f9, #fff8f0);
-    border: 1px dashed var(--primary);
-    border-radius: 1rem;
-    padding: 1rem 1.1rem;
-    margin-bottom: 1.5rem;
-  }
-  .plan-bonus-ttl {
-    font-weight: 800;
-    font-size: 0.82rem;
-    color: var(--primary);
-    margin-bottom: 0.75rem;
-    display: flex; align-items: center; gap: 0.35rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .pbi {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.38rem 0;
-    border-bottom: 1px solid rgba(139,94,131,0.1);
-    font-size: 0.81rem;
-    gap: 0.5rem;
-  }
-  .pbi:last-child { border-bottom: none; }
-  .pbi .bn { font-weight: 600; flex: 1; min-width: 0; }
-  .pbi .bf { color: var(--success); font-weight: 800; font-family: 'Fredoka', sans-serif; font-size: 0.9rem; white-space: nowrap; }
-
-  /* ===== BUTTONS ===== */
-  .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 1rem 1rem;
-    border-radius: 1rem;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-    transition: transform 0.22s, box-shadow 0.22s;
-    text-align: center;
-    line-height: 1.2;
-    word-break: break-word;
-  }
-  @media (min-width: 480px) { .btn { font-size: 1.1rem; padding: 1.1rem 1.25rem; } }
-  @media (hover: hover) { .btn:hover { transform: translateY(-2px) scale(1.01); } }
-
-  .btn-cta {
-    background: var(--grad-cta);
-    color: #fff;
-    box-shadow: var(--shadow-cta);
-    animation: pulseCta 2.2s ease-in-out infinite;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-cta::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
-    background-size: 200% 100%;
-    animation: shine 2.6s linear infinite;
-  }
-  @keyframes pulseCta {
-    0%,100% { box-shadow: var(--shadow-cta); }
-    50% { box-shadow: 0 18px 48px -8px rgba(31,160,90,0.72), inset 0 -3px 0 var(--success-dark); }
-  }
-  @keyframes shine { 0% { background-position: -200% 0 } 100% { background-position: 200% 0 } }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--primary);
-    border: 2px solid var(--primary);
-  }
-  @media (hover: hover) { .btn-outline:hover { background: var(--primary); color: #fff; transform: translateY(-2px); } }
-
-  .plan-trust {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.75rem;
-    font-size: 0.68rem;
-    color: var(--muted);
-    margin-top: 0.85rem;
-    text-align: center;
-  }
-  .plan-trust span { display: inline-flex; align-items: center; gap: 0.2rem; }
-
-  /* ===== GUARANTEE ===== */
-  .guarantee {
-    background: #fff;
-    border: 4px solid var(--success);
-    border-radius: 1.5rem;
-    padding: 2rem 1.25rem;
-    text-align: center;
-    box-shadow: 0 25px 50px -15px rgba(31,160,90,0.22);
-    position: relative;
-    max-width: 720px;
-    margin: 3.5rem auto 0;
-  }
-  @media (min-width: 480px) { .guarantee { padding: 2.5rem 2rem; } }
-  .guarantee .seal {
-    width: 5.5rem; height: 5.5rem;
-    border-radius: 50%;
-    background: var(--grad-cta);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 10px 30px -10px rgba(31,160,90,0.6);
-    margin: -5rem auto 1.35rem;
-    font-size: 2.5rem;
-    color: #fff;
-  }
-  @media (min-width: 480px) { .guarantee .seal { width: 6.2rem; height: 6.2rem; font-size: 3rem; margin-top: -5.5rem; } }
-  .guarantee h3 { font-family: 'Fredoka', sans-serif; font-size: clamp(1.3rem, 4vw, 1.8rem); color: var(--success); margin-bottom: 0.85rem; }
-  .guarantee p { font-size: 0.93rem; color: var(--muted); line-height: 1.75; }
-  .guarantee p strong { color: #1a0a2e; }
-
-  /* ===== FAQ ===== */
-  .faq { display: flex; flex-direction: column; gap: 0.6rem; max-width: 720px; margin: 2.25rem auto 0; }
-  .faq details {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 1rem;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    transition: box-shadow 0.2s;
-  }
-  .faq details[open] { box-shadow: var(--shadow-pop); border-color: rgba(139,94,131,0.3); }
-  .faq summary {
-    list-style: none; cursor: pointer;
-    padding: 1rem 1.1rem;
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 0.75rem;
-    font-weight: 600; font-size: 0.92rem; line-height: 1.35;
-    user-select: none;
-  }
-  @media (min-width: 480px) { .faq summary { padding: 1.1rem 1.4rem; font-size: 1rem; } }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: "▾"; color: var(--primary); transition: transform 0.25s; flex-shrink: 0; font-size: 1.05rem; }
-  .faq details[open] summary::after { transform: rotate(180deg); }
-  .faq-answer { padding: 0 1.1rem 1.1rem; color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
-  @media (min-width: 480px) { .faq-answer { padding: 0 1.4rem 1.2rem; font-size: 0.93rem; } }
-
-  /* ===== FINAL CTA ===== */
-  .final-cta { background: var(--grad-warm); color: #fff; text-align: center; padding: 3rem 0; }
-  .final-cta h2 { font-family: 'Fredoka', sans-serif; font-size: clamp(1.65rem, 6vw, 3rem); margin-bottom: 1rem; }
-
-  /* ===== FOOTER ===== */
-  footer {
-    background: #120828;
-    color: rgba(255,255,255,0.68);
-    padding: 2rem 1rem;
-    text-align: center;
-    font-size: 0.8rem;
-  }
-  footer .ftl { color: #fff; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.45rem; }
-  footer .small { opacity: 0.5; font-size: 0.7rem; margin-top: 0.5rem; line-height: 1.7; }
-  footer a { color: rgba(255,255,255,0.6); }
-  footer a:hover { color: #fff; }
-
-  /* ===== STICKY CTA ===== */
-  .sticky-buy {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: var(--grad-cta);
-    padding: 0.9rem 1rem;
-    z-index: 9990;
-    box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 0.75rem;
-    transform: translateY(100%);
-    transition: transform 0.35s ease;
-    flex-wrap: wrap;
-  }
-  .sticky-buy.vis { transform: translateY(0); }
-  .sticky-price { color: #fff; font-weight: 700; font-size: 0.82rem; line-height: 1.3; }
-  .sticky-price .np { font-family: 'Fredoka', sans-serif; font-size: 1.35rem; color: #f4c2ce; display: block; }
-  .sticky-btn {
-    background: var(--accent);
-    color: #1a0a2e;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 800; font-size: 0.95rem;
-    padding: 0.7rem 1.35rem;
-    border-radius: 999px;
-    border: 0; cursor: pointer;
-    animation: pulseSoft 1.8s ease-in-out infinite;
-    white-space: nowrap; flex-shrink: 0;
-  }
-  @keyframes pulseSoft { 0%,100%{opacity:1}50%{opacity:0.8} }
-
-  /* ===== URGENCY PILL ===== */
-  .urgency-pill {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    background: rgba(226,59,59,0.15);
-    border: 1px solid rgba(226,59,59,0.35);
-    color: #c0392b;
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    font-weight: 700; font-size: 0.75rem;
-    margin-bottom: 1rem;
-    animation: pulseSoft 1.8s ease-in-out infinite;
-  }
-  .urgency-pill .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: #e23b3b;
-    box-shadow: 0 0 7px #e23b3b;
-    animation: pulseSoft 1s steps(1) infinite;
-  }
-
-  /* ===== SECTION BG VARIANTS ===== */
-  .bg-light { background: #fff9f7; }
-  .bg-white { background: #fff; }
-  .bg-dark { background: var(--grad-dark); color: #fff; }
-
-  /* ===== NOTIFICATION TOAST ===== */
-  .pp-notify {
-    position: fixed; left: 16px;
-    z-index: 9999;
-    display: flex; align-items: center; gap: 10px;
-    width: min(320px, calc(100vw - 32px));
-    background: #fff;
-    color: #1a0a2e;
-    border-radius: 14px;
-    padding: 11px 13px;
-    box-shadow: 0 18px 45px -12px rgba(15,23,42,0.25), 0 4px 12px rgba(15,23,42,0.07);
-    border: 1px solid rgba(15,23,42,0.06);
-    transform: translateX(-130%);
-    opacity: 0;
-    transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), opacity 0.45s;
-    bottom: calc(80px + env(safe-area-inset-bottom, 0px));
-  }
-  .pp-notify.show { transform: translateX(0); opacity: 1; }
-  .pp-av {
-    width: 40px; height: 40px; min-width: 40px;
-    border-radius: 50%;
-    background: var(--grad-primary);
-    color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 700; font-size: 1rem; flex-shrink: 0;
-  }
-  .pp-body { flex: 1; min-width: 0; line-height: 1.3; }
-  .pp-name { font-weight: 700; font-size: 0.86rem; }
-  .pp-text { font-size: 0.77rem; color: #475569; margin-top: 1px; }
-  .pp-text strong { color: var(--primary); }
-  .pp-meta { font-size: 0.67rem; color: #94a3b8; margin-top: 3px; display: flex; align-items: center; gap: 5px; }
-  .pp-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: pulseSoft 1.5s infinite; }
-
-  /* ===== RESPONSIVE UTILITIES ===== */
-  @media (max-width: 480px) {
-    .plan-card { padding: 1.25rem 1rem; }
-    .plan-bonus-box { padding: 0.85rem; }
-    .value-stack { padding: 1.5rem 1rem; }
-    .guarantee { padding: 1.75rem 1rem; }
-  }
-  
-  </style>
-  <div style="width:100%; max-width: 1000px; margin: 0 auto;">
-    <section class="bg-light">
-  <div class="container">
-    <div class="text-center">
-      <span class="eyebrow">Bônus exclusivos do Plano Premium</span>
-      <h2 class="section-title">Você ainda recebe <span class="text-primary">4 bônus incríveis</span></h2>
-      <p class="section-sub">Além das 587 atividades completas, o Plano Premium inclui estes bônus especiais — cada um deles resolvendo um problema específico que seu filho pode ter.</p>
-    </div>
-
-    <div class="bonus-list">
-      <div class="bonus-item">
-        <div class="bonus-num">1</div>
-        <div class="bonus-info">
-          <h3>✏️ Caderno de Caligrafia Cursiva</h3>
-          <p>Atividades de escrita cursiva para desenvolver a coordenação motora e a letra junto com a leitura. Perfeito para usar em paralelo com as atividades do Kit.</p>
-        </div>
-        <div class="bonus-price">
-          <span class="old">R$37</span>
-          <span class="free">GRÁTIS</span>
+            /* PLANO PREMIUM DESTACADO */
+            .pricing-card.featured {
+                background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+                border: 1px solid transparent;
+                background-image: linear-gradient(180deg, #ffffff 0%, #fafaf9 100%), linear-gradient(135deg, #dfc086 0%, #f9f5eb 50%, #c5a059 100%);
+                background-origin: border-box;
+                background-clip: padding-box, border-box;
+                box-shadow: 0 10px 30px -10px rgba(197, 160, 89, 0.15), 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+                padding: 48px 32px 40px 32px;
+            }
+            .pricing-card.featured:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px -10px rgba(197, 160, 89, 0.25), 0 30px 60px -15px rgba(0, 0, 0, 0.08);
+            }
+            .badge-featured {
+                position: absolute;
+                top: -14px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #c5a059 0%, #dfc086 100%);
+                color: #ffffff;
+                font-family: 'Poppins', sans-serif;
+                font-size: 10px;
+                font-weight: 700;
+                padding: 5px 18px;
+                border-radius: 20px;
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+                box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
+            }
+            .pricing-card.featured .card-header h4 {
+                color: #c5a059;
+                background: linear-gradient(135deg, #b38938 0%, #dfc086 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .card-header h4 {
+                font-family: 'Poppins', sans-serif;
+                font-size: 22px;
+                font-weight: 800;
+                color: #0f172a;
+                margin: 0 0 6px 0;
+                letter-spacing: 1px;
+            }
+            .plan-subtitle {
+                font-family: 'Roboto', sans-serif;
+                font-size: 13px;
+                color: #64748b;
+                margin: 0 0 20px 0;
+                line-height: 1.4;
+            }
+            .strikethrough-price {
+                font-family: 'Roboto', sans-serif;
+                font-size: 14px;
+                color: #94a3b8;
+                text-decoration: line-through;
+                margin-bottom: 2px;
+                display: block;
+                font-weight: 500;
+            }
+            .card-price-container {
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                font-family: 'Poppins', sans-serif;
+                margin-bottom: 4px;
+            }
+            .price-symbol {
+                font-size: 18px;
+                font-weight: 700;
+                color: #0f172a;
+                margin-top: 8px;
+                margin-right: 2px;
+            }
+            .price-value-main {
+                font-size: 56px;
+                font-weight: 800;
+                color: #0f172a;
+                line-height: 1;
+                letter-spacing: -1px;
+            }
+            .price-cents-main {
+                font-size: 20px;
+                font-weight: 700;
+                color: #0f172a;
+                margin-top: 8px;
+            }
+            .price-green-badge {
+                font-family: 'Poppins', sans-serif;
+                font-size: 9px;
+                font-weight: 700;
+                color: #10b981;
+                letter-spacing: 1px;
+                display: inline-block;
+                margin-bottom: 28px;
+                text-transform: uppercase;
+                background: #ecfdf5;
+                padding: 4px 12px;
+                border-radius: 12px;
+            }
+            .pricing-card.featured .price-green-badge {
+                background: #fef3c7;
+                color: #d97706;
+            }
+            .divider-line {
+                height: 1px;
+                background-color: #f1f5f9;
+                width: 100%;
+                margin-bottom: 24px;
+            }
+            .pricing-card.featured .divider-line {
+                background-color: #f5efe6;
+            }
+            .plan-features {
+                list-style: none;
+                padding: 0;
+                margin: 0 0 30px 0;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                flex-grow: 1;
+            }
+            .plan-features li {
+                font-family: 'Roboto', sans-serif;
+                font-size: 14px;
+                color: #475569;
+                line-height: 1.5;
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .icon-check {
+                color: #10b981;
+                width: 16px;
+                height: 16px;
+                flex-shrink: 0;
+                margin-top: 2px;
+            }
+            .bonus-section-header {
+                font-family: 'Poppins', sans-serif;
+                font-size: 10px;
+                font-weight: 800;
+                color: #c5a059;
+                margin: 20px 0 8px 0;
+                text-align: left;
+                letter-spacing: 1px;
+                border-bottom: 1px dashed #e2e8f0;
+                padding-bottom: 6px;
+                text-transform: uppercase;
+            }
+            .pricing-card.featured .bonus-section-header {
+                border-bottom-color: #f3ebd9;
+            }
+            .icon-star, .icon-gift {
+                color: #c5a059;
+                width: 16px;
+                height: 16px;
+                flex-shrink: 0;
+                margin-top: 2px;
+            }
+            .plan-features li .text-pink {
+                color: #475569;
+            }
+            .plan-features li .text-pink strong {
+                color: #0f172a;
+            }
+            .plan-features li .text-purple {
+                color: #475569;
+            }
+            .plan-features li .text-purple strong {
+                color: #b45309;
+            }
+            .checkout-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+                padding: 18px 24px;
+                border-radius: 50px;
+                font-family: 'Poppins', sans-serif;
+                font-weight: 700;
+                font-size: 13px;
+                text-transform: uppercase;
+                text-decoration: none;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                cursor: pointer;
+                border: none;
+                margin-top: auto;
+                letter-spacing: 1px;
+            }
+            .basic-btn {
+                background: linear-gradient(135deg, #334155 0%, #0f172a 100%);
+                color: #ffffff;
+                box-shadow: 0 4px 15px rgba(15, 23, 42, 0.2);
+            }
+            .basic-btn:hover {
+                background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(15, 23, 42, 0.35);
+            }
+            .premium-btn {
+                background: linear-gradient(135deg, #c5a059 0%, #dfc086 100%);
+                color: #ffffff;
+                box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
+            }
+            .premium-btn:hover {
+                background: linear-gradient(135deg, #b38938 0%, #dfc086 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(197, 160, 89, 0.45);
+            }
+            .arrow-icon {
+                width: 14px;
+                height: 14px;
+                transition: transform 0.3s ease;
+            }
+            .checkout-btn:hover .arrow-icon {
+                transform: translateX(4px);
+            }
+            @media screen and (max-width: 768px) {
+                .pricing-wrapper {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 32px;
+                    padding: 20px 16px;
+                }
+                .pricing-card.featured {
+                    padding: 48px 24px 36px 24px;
+                }
+            }
+        </style>
+        <div class="a-i-cont a-cont" style="flex-direction: column; gap: 0; width: 100%;">
+            <div class="pricing-wrapper">
+                <!-- PLANO BÁSICO -->
+                <div class="pricing-card basic">
+                    <div class="card-header">
+                        <h4>PLANO BÁSICO</h4>
+                        <p class="plan-subtitle">Kit mais em conta para treinar o seu filho</p>
+                    </div>
+                    <div>
+                        <span class="strikethrough-price">De R$ 97,00</span>
+                        <div class="card-price-container">
+                            <span class="price-symbol">R$</span>
+                            <span class="price-value-main">24</span>
+                            <span class="price-cents-main">,90</span>
+                        </div>
+                        <span class="price-green-badge">PAGAMENTO ÚNICO - SEM MENSALIDADE</span>
+                    </div>
+                    
+                    <div class="divider-line"></div>
+                    
+                    <ul class="plan-features">
+                        <li>
+                            <svg class="icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            <span><strong>50 Atividades</strong> de Interpretação</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Material 100% Digital e Imprimível</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Nivelamento Nacional (BNCC)</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Suporte por E-mail</span>
+                        </li>
+                    </ul>
+                    <a href="https://chk.eduzz.com/2648719" class="checkout-btn basic-btn" target="_blank">
+                        <span>COMPRAR PLANO BÁSICO</span>
+                        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+                
+                <!-- PLANO PREMIUM -->
+                <div class="pricing-card featured">
+                    <div class="badge-featured">RECOMENDADO</div>
+                    <div class="card-header">
+                        <h4>PLANO PREMIUM</h4>
+                        <p class="plan-subtitle">Tudo do Básico + Acesso Vitalício e Combo Bônus</p>
+                    </div>
+                    <div>
+                        <span class="strikethrough-price">De R$ 197,00</span>
+                        <div class="card-price-container">
+                            <span class="price-symbol">R$</span>
+                            <span class="price-value-main">37</span>
+                            <span class="price-cents-main">,90</span>
+                        </div>
+                        <span class="price-green-badge">PAGAMENTO ÚNICO - EXPERIÊNCIA COMPLETA</span>
+                    </div>
+                    
+                    <div class="divider-line"></div>
+                    
+                    <ul class="plan-features">
+                        <li>
+                            <svg class="icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            <span><strong>587 Atividades</strong> de Interpretação</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            <span><strong>Acesso Vitalício</strong> ao material</span>
+                        </li>
+                        <li>
+                            <svg class="icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Atualizações Gratuitas Vitalícias</span>
+                        </li>
+                        
+                        <div class="bonus-section-header">+ COMBO DE BÔNUS E SUPORTE</div>
+                        
+                        <li>
+                            <svg class="icon-gift" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0115 3a3 3 0 013 3v3a3 3 0 01-3 3V6a1 1 0 00-1-1h-4a1 1 0 00-1 1v6a1 1 0 00-1-1H5a1 1 0 00-1 1v3a1 1 0 001 1h4a1 1 0 001-1v-2.236A3 3 0 015 15a3 3 0 01-3-3V8a3 3 0 013-3zm6 4H9V6h2v3zm4-3H13v3h2V6zM5 8h2v3H5V8zm8 7v1a1 1 0 001 1h3a1 1 0 001-1v-1h-5zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H9zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H9zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H5z" clip-rule="evenodd"></path></svg>
+                            <span class="text-pink"><strong>Bônus 1:</strong> 587 Atividades Ultra Eficientes</span>
+                        </li>
+                        <li>
+                            <svg class="icon-gift" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0115 3a3 3 0 013 3v3a3 3 0 01-3 3V6a1 1 0 00-1-1h-4a1 1 0 00-1 1v6a1 1 0 00-1-1H5a1 1 0 00-1 1v3a1 1 0 001 1h4a1 1 0 001-1v-2.236A3 3 0 015 15a3 3 0 01-3-3V8a3 3 0 013-3zm6 4H9V6h2v3zm4-3H13v3h2V6zM5 8h2v3H5V8zm8 7v1a1 1 0 001 1h3a1 1 0 001-1v-1h-5zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H9zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H9zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H5z" clip-rule="evenodd"></path></svg>
+                            <span class="text-pink"><strong>Bônus 2:</strong> Caderno de Interpretação (Letra Cursiva)</span>
+                        </li>
+                        <li>
+                            <svg class="icon-gift" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0115 3a3 3 0 013 3v3a3 3 0 01-3 3V6a1 1 0 00-1-1h-4a1 1 0 00-1 1v6a1 1 0 00-1-1H5a1 1 0 00-1 1v3a1 1 0 001 1h4a1 1 0 001-1v-2.236A3 3 0 015 15a3 3 0 01-3-3V8a3 3 0 013-3zm6 4H9V6h2v3zm4-3H13v3h2V6zM5 8h2v3H5V8zm8 7v1a1 1 0 001 1h3a1 1 0 001-1v-1h-5zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H9zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H9zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H5z" clip-rule="evenodd"></path></svg>
+                            <span class="text-pink"><strong>Bônus 3:</strong> Atividades em Vídeo (Letra Cursiva)</span>
+                        </li>
+                        <li>
+                            <svg class="icon-gift" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0115 3a3 3 0 013 3v3a3 3 0 01-3 3V6a1 1 0 00-1-1h-4a1 1 0 00-1 1v6a1 1 0 00-1-1H5a1 1 0 00-1 1v3a1 1 0 001 1h4a1 1 0 001-1v-2.236A3 3 0 015 15a3 3 0 01-3-3V8a3 3 0 013-3zm6 4H9V6h2v3zm4-3H13v3h2V6zM5 8h2v3H5V8zm8 7v1a1 1 0 001 1h3a1 1 0 001-1v-1h-5zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H9zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H9zm-4 0v1a1 1 0 001 1h3a1 1 0 001-1v-1H5z" clip-rule="evenodd"></path></svg>
+                            <span class="text-pink"><strong>Bônus 4:</strong> Cards de Interpretação para Praticar</span>
+                        </li>
+                        <li>
+                            <svg class="icon-star" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <span class="text-purple"><strong>Superbônus:</strong> Análise Individual de Nível de Interpretação</span>
+                        </li>
+                    </ul>
+                    <a href="https://chk.eduzz.com/2648722" class="checkout-btn premium-btn" target="_blank">
+                        <span>GARANTIR PLANO PREMIUM</span>
+                        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </div>
         </div>
       </div>
-
-      <div class="bonus-item">
-        <div class="bonus-num">2</div>
-        <div class="bonus-info">
-          <h3>🎥 Atividades em Vídeo</h3>
-          <p>Videoaulas com as melhores estratégias de interpretação, explicadas de forma visual e dinâmica para crianças aprenderem com mais facilidade.</p>
-        </div>
-        <div class="bonus-price">
-          <span class="old">R$47</span>
-          <span class="free">GRÁTIS</span>
-        </div>
-      </div>
-
-      <div class="bonus-item">
-        <div class="bonus-num">3</div>
-        <div class="bonus-info">
-          <h3>🃏 Flashcards de Interpretação</h3>
-          <p>Cards com perguntas-chave para treinar a compreensão de texto de forma rápida, lúdica e divertida — funciona como um jogo que desenvolve o raciocínio.</p>
-        </div>
-        <div class="bonus-price">
-          <span class="old">R$27</span>
-          <span class="free">GRÁTIS</span>
-        </div>
-      </div>
-
-      <div class="bonus-item">
-        <div class="bonus-num">4</div>
-        <div class="bonus-info">
-          <h3>📊 Análise Individual do Progresso</h3>
-          <p>Guia completo para você acompanhar a evolução do seu filho semana a semana, identificar os pontos que precisam de atenção e celebrar cada conquista.</p>
-        </div>
-        <div class="bonus-price">
-          <span class="old">R$97</span>
-          <span class="free">GRÁTIS</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- VALUE STACK -->
-    <div class="value-stack">
-      <h3>Se fossem vendidos separadamente, você pagaria…</h3>
-      <div class="vs-table">
-        <div class="vs-row">
-          <span class="vsr-label">587 Atividades de Interpretação</span>
-          <span class="vsr-price">R$247</span>
-        </div>
-        <div class="vs-row">
-          <span class="vsr-label">Caderno de Caligrafia Cursiva</span>
-          <span class="vsr-price">R$37</span>
-        </div>
-        <div class="vs-row">
-          <span class="vsr-label">Atividades em Vídeo</span>
-          <span class="vsr-price">R$47</span>
-        </div>
-        <div class="vs-row">
-          <span class="vsr-label">Flashcards de Interpretação</span>
-          <span class="vsr-price">R$27</span>
-        </div>
-        <div class="vs-row">
-          <span class="vsr-label">Análise Individual do Progresso</span>
-          <span class="vsr-price">R$97</span>
-        </div>
-      </div>
-      <span class="vs-total-old">TOTAL: R$455</span>
-      <p class="vs-price-you-pay">Você leva tudo isso por apenas <strong>R$37,90</strong></p>
-    </div>
-  </div>
-</section>
-  </div>
-</div>
-
 
 </div>
 <div class="a-b-o-cont atomicat-container-8b62713">
