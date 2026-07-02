@@ -5455,7 +5455,7 @@
                                     <span>Suporte por E-mail</span>
                                 </li>
                             </ul>
-                            <a href="https://pay.wiapy.com/8GLyjI1Hn3t" class="checkout-btn basic-btn" target="_blank" onclick="fbq('track', 'InitiateCheckout', {content_name: 'Plano Básico', value: 24.90, currency: 'BRL'});">
+                            <a href="https://pay.wiapy.com/8GLyjI1Hn3t" class="checkout-btn basic-btn" onclick="event.preventDefault(); fbq('track', 'InitiateCheckout', {content_name: 'Plano Básico', value: 24.90, currency: 'BRL'}); setTimeout(function(){ window.open('https://pay.wiapy.com/8GLyjI1Hn3t', '_blank'); }, 300);">
                                 <span>COMPRAR PLANO BÁSICO</span>
                                 <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -5563,8 +5563,7 @@
                                         de Interpretação</span>
                                 </li>
                             </ul>
-                            <a href="https://pay.wiapy.com/o0mSOWYuq5KL" class="checkout-btn premium-btn"
-                                target="_blank" onclick="fbq('track', 'InitiateCheckout', {content_name: 'Plano Premium', value: 37.90, currency: 'BRL'});">
+                            <a href="https://pay.wiapy.com/o0mSOWYuq5KL" class="checkout-btn premium-btn" onclick="event.preventDefault(); fbq('track', 'InitiateCheckout', {content_name: 'Plano Premium', value: 37.90, currency: 'BRL'}); setTimeout(function(){ window.open('https://pay.wiapy.com/o0mSOWYuq5KL', '_blank'); }, 300);">
                                 <span>GARANTIR PLANO PREMIUM</span>
                                 <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
