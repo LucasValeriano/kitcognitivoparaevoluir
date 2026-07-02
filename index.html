@@ -4984,21 +4984,37 @@
                         <div class="a-o-cont a-cont-f-w">
                             
 <style>
-  /* Overrides de responsividade para a secao de garantia */
+  /* Overrides de responsividade e reducao de espacos (GAP) para a secao de garantia */
+  .atomicat-container-6ef2381>.a-o-cont {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  @media screen and (max-width: 480px) {
+    .atomicat-container-6ef2381>.a-o-cont {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+  }
+
   .a-i-cont.a-s-d-v7qmu2 {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 40px;
-    max-width: 900px;
+    gap: 20px !important; /* Reduzido de 40px para 20px */
+    max-width: 800px;
     margin: 0 auto;
     width: 100%;
   }
 
   .a-c-cont-23adb9d {
     flex-shrink: 0;
-    width: 160px !important;
+    width: 140px !important; /* Ajustado de 160px para 140px */
     text-align: center;
     display: flex;
     justify-content: center;
@@ -5006,22 +5022,27 @@
   }
 
   .img-garantia {
-    width: 150px;
+    width: 130px; /* Ajustado para caber perfeitamente */
     height: auto;
     display: block;
     margin: 0 auto;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));
-    animation: floatGuarantee 4s ease-in-out infinite;
-  }
-
-  @keyframes floatGuarantee {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0px); }
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.05));
   }
 
   .atomicat-container-f145ed8 {
     flex: 1;
+  }
+
+  .atomicat-container-f145ed8>.a-o-cont>.a-cont {
+    gap: 4px !important; /* Reduzido o gap vertical interno de 10px para 4px */
+  }
+
+  .a-i-cont.a-s-d-v7qmu2 p {
+    margin: 0 !important; /* Zera margens padrao de p para remover lacunas */
+  }
+
+  .atomicat-heading-title-840afc1 {
+    margin-bottom: 2px !important; /* Reduzido o espaco entre titulo e texto */
   }
 
   /* Responsividade Mobile-First */
@@ -5031,28 +5052,28 @@
       text-align: center !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: 20px !important;
-      padding: 0 16px !important;
+      gap: 10px !important; /* Reduzido o gap vertical no mobile */
+      padding: 0 8px !important;
     }
 
     .a-c-cont-23adb9d {
       width: 100% !important;
-      margin-bottom: 10px !important;
+      margin-bottom: 2px !important;
     }
 
     .img-garantia {
-      width: 130px;
+      width: 110px;
     }
 
     .a-e-cont.atomicat-heading-title-840afc1 h3 {
       text-align: center !important;
-      font-size: 24px !important;
+      font-size: 20px !important;
     }
 
     .a-e-cont.atomicat-heading-title-7aae20b h3 {
       text-align: center !important;
-      font-size: 15px !important;
-      line-height: 1.5em !important;
+      font-size: 14px !important;
+      line-height: 1.4em !important;
     }
   }
 </style>
