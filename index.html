@@ -6544,12 +6544,21 @@
     </div>
 
     <script>
+        let upgradeModalOpenedAutomatically = false;
+
         function openUpgradeModal() {
             document.getElementById('upgradeModal').classList.add('show');
         }
 
         function closeUpgradeModal() {
             document.getElementById('upgradeModal').classList.remove('show');
+        }
+
+        function triggerAutomaticUpgradeModal() {
+            if (!upgradeModalOpenedAutomatically) {
+                upgradeModalOpenedAutomatically = true;
+                openUpgradeModal();
+            }
         }
 
         function declineUpgrade() {
@@ -6569,6 +6578,29 @@
             setTimeout(function(){
                 window.open(upgradeUrl, '_blank');
             }, 300);
+        });
+
+        // 1. Back-Redirect (Mobile e Desktop)
+        (function() {
+            // Adiciona estados no histórico do navegador
+            history.pushState({init: true}, null, window.location.href);
+            history.pushState({upgradeOffer: true}, null, window.location.href);
+
+            window.addEventListener('popstate', function(event) {
+                if (!upgradeModalOpenedAutomatically) {
+                    event.preventDefault();
+                    triggerAutomaticUpgradeModal();
+                    // Mantém a interceptação empurrando o estado novamente
+                    history.pushState({upgradeOffer: true}, null, window.location.href);
+                }
+            });
+        })();
+
+        // 2. Intenção de Saída pelo mouse (Desktop)
+        document.addEventListener('mouseleave', function(e) {
+            if (e.clientY < 20) {
+                triggerAutomaticUpgradeModal();
+            }
         });
     </script>
 </body>
